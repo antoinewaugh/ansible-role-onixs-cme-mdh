@@ -1,0 +1,3 @@
+---
+# vars file for onixs-cme-mdh 
+onixs_cme_mdh_url: "https://download.onixs.support/cpp/{{ onixs_cme_mdh_os }}/{{ onixs_cme_mdh_os_ver }}/gcc{{ onixs_cme_mdh_gcc_ver }}-x64/OnixS.CmeMdhCpp-{{ onixs_cme_mdh_os }}{{ onixs_cme_mdh_os_ver }}-gcc{{ onixs_cme_mdh_gcc_ver }}-c++{{ onixs_cme_mdh_cpp_ver }}-x64-{{ onixs_cme_mdh_ver }}.tar.xz"

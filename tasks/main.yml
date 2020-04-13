@@ -1,0 +1,55 @@
+- name: Checking if OnixS library exists
+  stat:
+    path: "{{ onixs_cmd_mdh_library_dir }}/libonixs-cmemdh.so"
+  register: onixs_present
+
+- name: Retrive OnixS Libraries
+  get_url:
+    url: "{{ onixs_cme_mdh_url }}"
+    username: "{{ onixs_cme_mdh_user }}"
+    password: "{{ onixs_cme_mdh_password }}"
+    dest: "{{ onixs_cmd_mdh_temp_dir }}/OnixS.tar.xz"
+  when: onixs_present.stat.exists == False
+
+- name: Extract OnixS Libraries
+  unarchive:
+    src: "{{ onixs_cme_mdh_temp_dir }}/OnixS.tar.xz"
+    dest: "{{ onixs_cme_mdh_temp_dir }}"
+    remote_src: yes
+  when: onixs_present.stat.exists == False
+
+- name: Create OnixS system library folder
+  file:
+    path: "{{ onixs_cme_mdh_library_dir }}"
+    state: directory
+  become: true
+  when: onixs_present.stat.exists == False
+
+- name: Copy OnixS libraries to system folder
+  copy:
+    src: "{{ item }}"
+    dest: /usr/local/lib/OnixS/
+    remote_src: yes
+  with_fileglob: "{{ onixs_cme_mdh_temp_dir }}/OnixS.CmeMdhCpp-{{ onixs_cme_mdh_os }}{{ onixs_cme_mdh_os_ver }}-gcc{{ onixs_cme_mdh_gcc_ver }}-c++{{ onixs_cme_mdh_cpp_ver }}-x64-{{ onixs_cme_mdh_ver }}/lib/*"
+  become: true
+  when: onixs_present.stat.exists == False
+
+- name: Copy OnixS headers to system folder
+  copy:
+    src: "{{ onixs_cme_mdh_temp_dir }}/OnixS.CmeMdhCpp-{{ onixs_cme_mdh_os }}{{ onixs_cme_mdh_os_ver }}-gcc{{ onixs_cme_mdh_gcc_ver }}-c++{{ onixs_cme_mdh_cpp_ver }}-x64-{{ onixs_cme_mdh_ver }}/include/OnixS"
+    dest: "{{ onixs_cme_mdh_include_dir }}"
+    remote_src: yes
+  become: true
+  when: onixs_present.stat.exists == False
+
+- name: Remove OnixS download tarball
+  file:
+    path: "{{ onixs_cme_mdh_temp_dir }}/OnixS.tar.xz"
+    state: absent
+  when: onixs_present.stat.exists == False
+
+- name: Remove OnixS download folder
+  file:
+    path: "{{ onixs_cme_mdh_temp_dir }}/OnixS.CmeMdhCpp-{{ onixs_cme_mdh_os }}{{ onixs_cme_mdh_os_ver }}-gcc{{ onixs_cme_mdh_gcc_ver }}-c++{{ onixs_cme_mdh_cpp_ver }}-x64-{{ onixs_cme_mdh_ver }}"
+    state: absent
+  when: onixs_present.stat.exists == False
