@@ -8,7 +8,7 @@
     url: "{{ onixs_cme_mdh_url }}"
     username: "{{ onixs_cme_mdh_user }}"
     password: "{{ onixs_cme_mdh_password }}"
-    dest: "{{ onixs_cmd_mdh_temp_dir }}/OnixS.tar.xz"
+    dest: "{{ onixs_cme_mdh_temp_dir }}/OnixS.tar.xz"
   when: onixs_present.stat.exists == False
 
 - name: Extract OnixS Libraries
