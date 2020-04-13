@@ -6,8 +6,8 @@
 - name: Retrive OnixS Libraries
   get_url:
     url: "{{ onixs_cme_mdh_url }}"
-    username: "{{ onixs_cme_mdh_user }}"
-    password: "{{ onixs_cme_mdh_password }}"
+    url_username: "{{ onixs_cme_mdh_user }}"
+    url_password: "{{ onixs_cme_mdh_password }}"
     dest: "{{ onixs_cme_mdh_temp_dir }}/OnixS.tar.xz"
   when: onixs_present.stat.exists == False
 
