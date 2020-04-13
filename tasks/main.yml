@@ -1,6 +1,6 @@
 - name: Checking if OnixS library exists
   stat:
-    path: "{{ onixs_cmd_mdh_library_dir }}/libonixs-cmemdh.so"
+    path: "{{ onixs_cme_mdh_library_dir }}/libonixs-cmemdh.so"
   register: onixs_present
 
 - name: Retrive OnixS Libraries
