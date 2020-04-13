@@ -36,7 +36,7 @@
 
 - name: Copy OnixS headers to system folder
   copy:
-    src: "{{ onixs_cme_mdh_temp_dir }}/OnixS.CmeMdhCpp-{{ onixs_cme_mdh_os }}{{ onixs_cme_mdh_os_ver }}-gcc{{ onixs_cme_mdh_gcc_ver }}-c++{{ onixs_cme_mdh_cpp_ver }}-x64-{{ onixs_cme_mdh_ver }}/include/OnixS/CME"
+    src: "{{ onixs_cme_mdh_temp_dir }}/OnixS.CmeMdhCpp-{{ onixs_cme_mdh_os }}{{ onixs_cme_mdh_os_ver }}-gcc{{ onixs_cme_mdh_gcc_ver }}-c++{{ onixs_cme_mdh_cpp_ver }}-x64-{{ onixs_cme_mdh_ver }}/include/OnixS/"
     dest: "{{ onixs_cme_mdh_include_dir }}"
     remote_src: yes
   become: true
