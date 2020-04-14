@@ -27,17 +27,15 @@
 
 # Necessary as with_fileglob only searched for _local_ files
 - name: Locate OnixS library files
-  find: 
-    paths: "{{ onixs_cme_mdh_temp_dir }}/OnixS.CmeMdhCpp-{{ onixs_cme_mdh_os }}{{ onixs_cme_mdh_os_ver }}-gcc{{ onixs_cme_mdh_gcc_ver }}-c++{{ onixs_cme_mdh_cpp_ver }}-x64-{{ onixs_cme_mdh_ver }}/lib"
-    follow: yes
+  shell: "ls {{ onixs_cme_mdh_temp_dir }}/OnixS.CmeMdhCpp-{{ onixs_cme_mdh_os }}{{ onixs_cme_mdh_os_ver }}-gcc{{ onixs_cme_mdh_gcc_ver }}-c++{{ onixs_cme_mdh_cpp_ver }}-x64-{{ onixs_cme_mdh_ver }}/lib/"
   register: onixs_libraries
 
 - name: Copy OnixS libraries to system folder
   copy:
-    src: "{{ item.path }}"
+    src: "{{ onixs_cme_mdh_temp_dir }}/OnixS.CmeMdhCpp-{{ onixs_cme_mdh_os }}{{ onixs_cme_mdh_os_ver }}-gcc{{ onixs_cme_mdh_gcc_ver }}-c++{{ onixs_cme_mdh_cpp_ver }}-x64-{{ onixs_cme_mdh_ver }}/lib/{{ item }}"
     dest: "{{ onixs_cme_mdh_library_dir }}"
     remote_src: yes
-  with_items: "{{ onixs_libraries.files }}"
+  with_items: "{{ onixs_libraries.stdout_lines }}"
   become: true
   when: onixs_present.stat.exists == False
 
