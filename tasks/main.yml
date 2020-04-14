@@ -29,6 +29,7 @@
 - name: Locate OnixS library files
   shell: "ls {{ onixs_cme_mdh_temp_dir }}/OnixS.CmeMdhCpp-{{ onixs_cme_mdh_os }}{{ onixs_cme_mdh_os_ver }}-gcc{{ onixs_cme_mdh_gcc_ver }}-c++{{ onixs_cme_mdh_cpp_ver }}-x64-{{ onixs_cme_mdh_ver }}/lib/"
   register: onixs_libraries
+  when: onixs_present.stat.exists == False
 
 - name: Copy OnixS libraries to system folder
   copy:
