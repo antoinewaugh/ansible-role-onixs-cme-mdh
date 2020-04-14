@@ -34,7 +34,7 @@
 
 - name: Copy OnixS libraries to system folder
   copy:
-    src: "{{ item }}"
+    src: "{{ item.path }}"
     dest: "{{ onixs_cme_mdh_library_dir }}"
     remote_src: yes
   with_items: "{{ onixs_libraries.files }}"
