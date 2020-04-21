@@ -1,3 +1,12 @@
+- name: Update pip
+  pip:
+    name: pip
+    state: latest
+    
+- name: Install conan
+  pip:
+    name: conan
+
 - name: Checking if OnixS library exists
   stat:
     path: "{{ onixs_cme_mdh_library_dir }}/libonixs-cmemdh.so"
